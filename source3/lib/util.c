@@ -269,6 +269,14 @@ bool file_exist_stat(const char *fname,SMB_STRUCT_STAT *sbuf,
  Check if a unix domain socket exists - call vfs_file_exist for samba files.
 ********************************************************************/
 
+#ifndef S_ISSOCK                        /* 12 UNIX domain socket        */
+#       ifdef   S_IFSOCK
+#               define  S_ISSOCK(m)     (((m) & S_IFMT) == S_IFSOCK)
+#       else
+#               define  S_ISSOCK(m)     (0)
+#       endif
+#endif
+
 bool socket_exist(const char *fname)
 {
 	SMB_STRUCT_STAT st;

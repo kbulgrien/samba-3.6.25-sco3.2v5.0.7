@@ -80,12 +80,31 @@ LICENSE
 ------------------------------------------------------------------------------
 
 All modifications to the original Samba project source are released under the
-same licence that the Samba project uses (GPLv3 per README.contributing).  As
-the gnulib source license is GNU GPL version 3 or later, the added gnulib
+same licence that the Samba project uses (GPLv3 per README.contributing).
+
+As the gnulib source license is GNU GPL version 3 or later, the added gnulib
 sources are license compatible with the original source tree.
 
-All modifications made by this project are considered licensed under the same
-version of the GPL that applies to the Samba project sources it is based on.
+The source3/lib/util.c patch for the S_ISSCOK macro was derived from a source
+file already deployed on the sco3.2v5.0.7 system that contained the following
+copyright and license statement:
+
+/* @(#)statdefs.h       1.9 03/06/15 Copyright 1998 J. Schilling */
+/*
+ *      Definitions for stat() file mode
+ *
+ *      Copyright (c) 1998 J. Schilling
+ */
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+
+All modifications made by this project are therefore considered licensed under
+the same version of the GPL that applies to the Samba project sources it is
+based on since this satisfies requirements of all code used from other
+sources.
 
 ------------------------------------------------------------------------------
 TOOLS
