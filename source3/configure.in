@@ -711,7 +711,9 @@ SAVE_CPPFLAGS="${CPPFLAGS}"
 CPPFLAGS="${CPPFLAGS} ${SAMBA_CONFIGURE_CPPFLAGS}"
 
 AC_LIBREPLACE_BROKEN_CHECKS
-AC_CHECK_FUNCS([syslog],[],[AC_MSG_ERROR([Required function not found])])
+# syslog() is not required to `make bin/smbclient` so AC_MSG_ERROR is changed
+# to AC_MSG_WARN for purposes of building the project on sco3.2v5.0.7.
+AC_CHECK_FUNCS([syslog],[],[AC_MSG_WARN([Required function not found])])
 AC_LIBREPLACE_NETWORK_CHECKS
 
 CPPFLAGS="${SAVE_CPPFLAGS}"
