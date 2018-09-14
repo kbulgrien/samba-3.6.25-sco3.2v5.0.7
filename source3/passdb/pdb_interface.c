@@ -47,7 +47,7 @@ static void lazy_initialize_passdb(void)
 	initialized = True;
 }
 
-static bool lookup_global_sam_rid(TALLOC_CTX *mem_ctx, uint32 rid,
+static bool lookup_global_sam_rid(TALLOC_CTX *mem_ctx, uint32_t rid,
 				  const char **name,
 				  enum lsa_SidType *psid_name_use,
 				  union unid_t *unix_id);
