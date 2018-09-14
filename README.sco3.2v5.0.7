@@ -1,0 +1,89 @@
+------------------------------------------------------------------------------
+BACKGROUND
+------------------------------------------------------------------------------
+
+Impetus for the project was provided by a desire to use smbclient to publish
+files on a Windows Server 2012 R2 share.  SCO-build samba 3.0.14a or 3.0.20a
+releases do not support use of the SMB1 protocol disabled by default on newer
+servers.  As the SMB1 protocol has severe vulnerabilities, enabling SMB1 was
+not considered an option.
+
+samba 3.6.x was the first version to support SMB2, so it was selected for
+this effort, in part, because building top-of-tree versions of complex
+software is often difficult for sco3.2v5.0.7 systems.
+
+NOTE:  Version 4.x.x was not considered due to its use of the waf build system
+       written in python.  At the time, python was not built on the project's
+       sco3.2v5.0.7 build system, though later it was determined that building
+       Python 2.5.6 was possible, and that Samba presently only requires
+       Python 2.4.2 or later.
+
+Initial effort involved use of samba-3.6.0.tar sources, but some difficulty
+was encountered, so for a more in-depth build attempt, development moved to
+use of the samba-3.6.25.tar release.
+
+Upon the eventual successful building of source3/bin/smbclient, this project
+was created publically share the modifications used to build the project on
+sco3.2v5.0.7.
+
+------------------------------------------------------------------------------
+USE OF GNULIB
+------------------------------------------------------------------------------
+
+Once all compilation issues were resolved, the link by `make bin/smbclient`
+failed due to lack of a strtoull function.  Build was only possible at all
+when CFLAGS included -DHAVE_STRTOLL and -DHAVE_STRTULL.  Though the system
+/usr/lib/libstdc++.so.4.0.1 and /usr/lib/libc-2.3.2.so shared objects did
+contain plain-text strings "strtoll" and "strtoull" in what appeared to be
+lists of exported functions, /usr/include headers did not mention them.
+
+The project opted to supply strtoull() via gnulib rather than to address why
+lib/replace/replace.c workarounds failed to work.  This fork, therefore, adds
+related gnulib source files not present in the original project, and some
+changes to autotools *.in files.
+
+gnulib version:
+
+gnulib-tool (GNU gnulib 2018-05-16)
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Import command:
+
+gnulib-tool --import strtoull
+
+------------------------------------------------------------------------------
+CAVEATS
+------------------------------------------------------------------------------
+
+This fork of the samba project modifies only the v3.6-stable branch for the
+express purpose of improving compilation on sco3.2v5.0.7 operating systems.
+
+This project (presently) aims only to tackle issues related to building and
+using source3/bin/smbclient to interact with shares published by other
+systems.  No attempt is made to build samba for use as a server.
+
+Modifications to the v3.6-stable branch were made to expediciously produce a
+sco3.2v5.0.7 binary.  Very little attempt was made to assure applicability
+of the changes to other build platforms, and no attempt was made to assure
+other builds were not broken.
+
+While autotool *.in file modifications, particularly those related to import
+of gnulib's strtoull, were viable for purposes of building on sco3.2v5.0.7, no
+attempt was made to be sure the additions would not impact build on other
+platforms.
+
+------------------------------------------------------------------------------
+LICENSE
+------------------------------------------------------------------------------
+
+All modifications to the original Samba project source are released under the
+same licence that the Samba project uses (GPLv3 per README.contributing).  As
+the gnulib source license is GNU GPL version 3 or later, the added gnulib
+sources are license compatible with the original source tree.
+
+All modifications made by this project are considered licensed under the same
+version of the GPL that applies to the Samba project sources it is based on.
+
