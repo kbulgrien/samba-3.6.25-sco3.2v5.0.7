@@ -379,7 +379,7 @@ bool delete_share_security(const char *servicename)
 	char *c_servicename = canonicalize_servicename(talloc_tos(), servicename);
 
 	if (!c_servicename) {
-		return NULL;
+		return False;
 	}
 
 	if (!share_info_db_init()) {
