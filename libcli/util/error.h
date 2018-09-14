@@ -29,7 +29,9 @@ bool ntstatus_dos_equal(NTSTATUS status1, NTSTATUS status2);
 /*****************************************************************************
 convert a NT status code to a dos class/code
  *****************************************************************************/
-void ntstatus_to_dos(NTSTATUS ntstatus, uint8_t *eclass, uint32_t *ecode);
+/* void ntstatus_to_dos(NTSTATUS ntstatus, uint8_t *eclass, uint32_t *ecode); */
+/* source3/include/proto.h */
+void ntstatus_to_dos(NTSTATUS ntstatus, uint8 *eclass, uint32 *ecode);
 
 /*****************************************************************************
 convert a WERROR to a NT status32 code
