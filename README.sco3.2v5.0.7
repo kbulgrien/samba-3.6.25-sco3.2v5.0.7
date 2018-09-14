@@ -87,3 +87,84 @@ sources are license compatible with the original source tree.
 All modifications made by this project are considered licensed under the same
 version of the GPL that applies to the Samba project sources it is based on.
 
+------------------------------------------------------------------------------
+TOOLS
+------------------------------------------------------------------------------
+
+The project build system is based on the following vendor-supplied packages:
+
+  Extended Shells (ver 1.4.1Ab)
+  FSUpthreads - POSIX 1003.1c threads implementation (ver 3.14)
+  GNU Development Tools (ver 5.0.7Kj)
+  GNU Development Tools (ver 5.0.7g)
+  Java 2 1.3.1_22 Plugin (ver 1.3.1Va)
+  Java 2 1.3.1_22 Runtime Environment (ver 1.3.1Va)
+  Java 2 1.3.1_22 Software Development Kit (ver 1.3.1Va)
+  SCO OpenServer Development System (ver 5.2.0Aa)
+  SCO OpenServer Enterprise System (ver 5.0.7Hw)
+  patchck - package management tool (ver 18051503)
+  OSS672A - OpenServer 5 Network Header File Update (ver 1.0.0)
+  OSS673A - OSR 5.0.7 SCSI Floppy Driver supplement (ver 1.0.0)
+  P535239A - pmd security fix (ver 1.0.0)
+  SCO OpenServer Release 5.0.7 Maintenance Pack 5 (ver 1.0.0Mc)
+
+For purposes of building more current revisions of free and open source
+projects than were supplied by the vendor, a number of build tools were
+updated by building statically linked binaries and deploying then to the
+developer's home directory.  In most cases, configuring build of the tools
+was as simple as issuing the following ./configure command:
+
+  CONFIG_SHELL=$(which bash) ./configure CONFIG_SHELL=$(which bash) \
+    -C --prefix="${HOME}"
+
+Additional environment variables were set as follows:
+
+  ACCEPT_INFERIOR_RM_PROGRAM=yes
+  export ACCEPT_INFERIOR_RM_PROGRAM
+  CPATH=${HOME}/include
+  export CPATH
+  CFLAGS="-static"
+  export CFLAGS
+  PKG_CONFIG_PATH=${HOME}/lib/pkgconfig
+  export PKG_CONFIG_PATH
+
+Build tools in the developers bin folder are PATHed before vendor-supplied
+tools, and include:
+
+* aclocal (GNU automake) 1.14
+* aclocal (GNU automake) 1.15
+* aclocal (GNU automake) 1.9.6
+* autoconf (GNU Autoconf) 2.69
+* autoheader (GNU Autoconf) 2.69
+* autom4te (GNU Autoconf) 2.69
+* automake (GNU automake) 1.14
+* automake (GNU automake) 1.15
+* automake (GNU automake) 1.9.6
+* autoreconf (GNU Autoconf) 2.69
+* autoscan (GNU Autoconf) 2.69
+* autoupdate (GNU Autoconf) 2.69
+* grep (GNU grep) 2.25
+* ifnames (GNU Autoconf) 2.69
+* libtoolize (GNU libtool) 1.5.24
+* m4 (GNU M4) 1.4.9
+* GNU Make 3.82
+* Python 2.5.6
+
+GCC 3.4.6 was also built and present but the vendor-supplied gcc 2.95.3 was
+used for this project.
+
+------------------------------------------------------------------------------
+BUILD
+------------------------------------------------------------------------------
+
+In its final state, the project is known to build with:
+
+$ cd source3
+$ make clean distclean; rm -f config.cache
+$ ./autogen.sh
+$ CONFIG_SHELL=$(which bash) CC=$(which gcc) CFLAGS="-static -DHAVE_DLOPEN \
+  -DHAVE_DLSYM -DHAVE_DLCLOSE -DHAVE_DLERROR -DHAVE_STRTOLL \
+  -DHAVE_STRTOULL" ./configure CONFIG_SHELL=$(which bash) \
+  -C --prefix="${HOME}"
+$ make bin/smbclient
+
