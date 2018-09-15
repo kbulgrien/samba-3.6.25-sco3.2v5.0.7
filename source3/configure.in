@@ -1,7 +1,8 @@
 dnl Process this file with autoconf to produce a configure script.
 
 dnl We must use autotools 2.54 or above
-AC_PREREQ(2.54)
+dnl but gnulib required autotools 2.59 or above
+AC_PREREQ(2.59)
 
 AC_INIT([Samba],[3],[samba-technical@samba.org])
 
