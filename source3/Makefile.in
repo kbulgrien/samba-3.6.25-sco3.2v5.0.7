@@ -27,6 +27,10 @@ CC=@CC@
 SHLD=@SHLD@
 LIB_PATH_VAR=@LIB_PATH_VAR@
 
+SUBDIRS = lib
+ACLOCAL_AMFLAGS = -I m4
+EXTRA_DIST = m4/gnulib-cache.m4
+
 ## Dynamic shared libraries build settings
 DSO_EXPORTS_CMD=-Wl,--version-script,$(srcdir)/exports/`basename $@ | sed 's:\.@SHLIBEXT@[\.0-9]*$$:.@SYMSEXT@:'`
 DSO_EXPORTS=@DSO_EXPORTS@
@@ -459,6 +463,7 @@ LIB_OBJ = $(LIBSAMBAUTIL_OBJ) $(UTIL_OBJ) $(CRYPTO_OBJ) \
 	  lib/util_str.o lib/clobber.o lib/util_sid.o \
 	  lib/util_unistr.o ../lib/util/charset/codepoints.o lib/util_file.o \
 	  lib/util.o lib/util_cmdline.o lib/util_names.o \
+	  lib/strtoull.o \
 	  lib/util_sock.o lib/sock_exec.o lib/util_sec.o \
 	  lib/substitute.o lib/dbwrap_util.o \
 	  lib/ms_fnmatch.o lib/errmap_unix.o \
