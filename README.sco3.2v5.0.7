@@ -206,8 +206,8 @@ To deploy the newly built smbclient, only the smbclient binary is required,
 but to avoid an error message under certain circumstances, also create an
 smb.conf file.  For example:
 
-$ cp -a bin/smbclient /usr/local/bin
-$ cp -a ../examples/smb.conf.default /usr/local/smb.conf
+$ cp -p bin/smbclient /usr/local/bin
+$ cp -p ../examples/smb.conf.default /usr/local/smb.conf
 
 While it is NOT necessary to have a vendor-supplied samba package installed
 for this smbclient binary to work, using the ./configure --prefix="/usr/local"
