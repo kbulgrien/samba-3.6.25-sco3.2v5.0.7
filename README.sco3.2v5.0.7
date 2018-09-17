@@ -176,14 +176,43 @@ used for this project.
 BUILD
 ------------------------------------------------------------------------------
 
-In its final state, the project is known to build with:
+In its final state, the project is known to build with the following process:
 
-$ cd source3
-$ make clean distclean; rm -f config.cache
-$ ./autogen.sh
-$ CONFIG_SHELL=$(which bash) CC=$(which gcc) CFLAGS="-static -DHAVE_DLOPEN \
-  -DHAVE_DLSYM -DHAVE_DLCLOSE -DHAVE_DLERROR -DHAVE_STRTOLL \
-  -DHAVE_STRTOULL" ./configure CONFIG_SHELL=$(which bash) \
-  -C --prefix="${HOME}"
-$ make bin/smbclient
+* Browse to https://github.com/kbulgrien/smbclient-3.6.26-sco3.2v5.0.7
+* Verify that the v3-6-stable branch is selected.
+* Pull down the "Clone or download" control.
+* Use "Download Zip" to get smbclient-3.6.26-sco3.2v5.0.7-3-6-stable.zip
+* Put smbclient-3.6.26-sco3.2v5.0.7-3-6-stable.zip on a build system.
+* Unzip the sources and make bin/smbmount.  For example:
+
+  $ cd ${HOME}
+  $ unzip smbclient-3.6.26-sco3.2v5.0.7-3-6-stable.zip
+
+* Build smbclient.  For example:
+
+  $ cd ${HOME}/smbclient-3.6.26-sco3.2v5.0.7-3-6-stable/source3
+  $ ./autogen.sh
+  $ CONFIG_SHELL=$(which bash) CC=$(which gcc) CFLAGS="-static -DHAVE_DLOPEN \
+    -DHAVE_DLSYM -DHAVE_DLCLOSE -DHAVE_DLERROR -DHAVE_STRTOLL \
+    -DHAVE_STRTOULL" ./configure CONFIG_SHELL=$(which bash) \
+    -C --prefix="/usr/local"
+  $ make bin/smbclient
+
+------------------------------------------------------------------------------
+INSTALL
+------------------------------------------------------------------------------
+
+To deploy the newly built smbclient, only the smbclient binary is required,
+but to avoid an error message under certain circumstances, also create an
+smb.conf file.  For example:
+
+$ cp -a bin/smbclient /usr/local/bin
+$ cp -a ../examples/smb.conf.default /usr/local/smb.conf
+
+While it is NOT necessary to have a vendor-supplied samba package installed
+for this smbclient binary to work, using the ./configure --prefix="/usr/local"
+argument specified in the BUILD commands should obviate a need to overwrite a
+pre-existing smbclient binary on a target system in the event that it already
+has a vendor-supplied samba package pre-installed (i.e. "Samba x.x.xxx File
+and Print Server (ver x.xx.xxxx)").
 
